@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "test"
+version = "0.1.0"
+description = ""
+authors = ["<author@test.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"  # Test caret requirement on python
+# Test comment above dependency
+foo = "^0.1.0"  # Test caret requirement
+bar = "~1.2.3"  # Test tilde requirement
+appdirs = "!=1.3.0"  # Test not equal requirement
+cleo = ">=1.0.0"  # Test greater than or equal to requirement
+baz = ">2.2.2"  # Test greater than requirement
+pyupgrade = "<=0.1.1"  # Test less than or equal requirement
+seedir = "<0.2.0"  # Test less than requirement
+vulture = "!=1.0"  # Test not equal requirement
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+coverage = { extras = ["toml"], version = "^6.4" }  # Test inline table syntax
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+Sphinx = [
+    { version = "^4", python = ">=3.10" },
+    { version = "^3.5", python = "^3.8" },
+    { version = "<2", python = "^3.5" }
+]  # Test multiple constraint dependency

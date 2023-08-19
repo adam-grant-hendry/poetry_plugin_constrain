@@ -1,0 +1,6 @@
+# Acronyms used in this project
+CICD
+pwsh
+qmark
+noreply
+numref
