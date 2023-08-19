@@ -1,0 +1,38 @@
+name: Clear Cache
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out the Repository
+        uses: actions/checkout@v4
+
+      - name: Clear the Cache
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh extension install actions/gh-actions-cache
+
+          REPO=${{ github.repository }}
+
+          echo "Deleting caches in $REPO..."
+          while true; do
+            # `gh actions-cache list` permits returning a maximum of 100 caches
+            caches=$(gh actions-cache list -L 100 | cut -f 1)
+
+            if [ -z "$caches" ]; then
+              echo "Cache cleared."
+              break
+            fi
+
+            for cache in $caches; do
+              gh actions-cache delete $cache -R $REPO --confirm
+            done
+
+          done

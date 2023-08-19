@@ -1,0 +1,8 @@
+# List of general software terms used in this package
+fspath
+genpyi
+Liskov
+noreply
+picklable
+rcfile
+envlist

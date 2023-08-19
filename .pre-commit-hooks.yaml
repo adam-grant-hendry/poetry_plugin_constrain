@@ -1,0 +1,8 @@
+- id: poetry-plugin-constrain
+  name: poetry-plugin-constrain
+  description: A poetry plugin and pre-commit hook that enforces a default version constraint method for dependencies.
+  entry: poetry constrain
+  language: python
+  language_version: python3
+  pass_filenames: false
+  files: ^pyproject.toml$

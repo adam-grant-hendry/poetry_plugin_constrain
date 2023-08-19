@@ -1,0 +1,15 @@
+# Names of python packages used in this project
+cython
+direnv
+pycln
+pydantic
+pydata
+pyembree
+pygrep-hooks
+pypackages
+pypoetry
+pyright
+pytype
+pyupgrade
+rstcheck
+xdist

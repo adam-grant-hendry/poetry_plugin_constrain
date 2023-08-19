@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "PyTest Debugger",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            // VSCode doesn't stop at breakpoints if `pytest-cov` installed
+            // See: https://code.visualstudio.com/docs/python/testing#_pytest-configuration-settings
+            "env": {"PYTEST_ADDOPTS": "--no-cov"},
+            "justMyCode": false
+        },
+        {
+            "name": "Sphinx Debugger",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/.venv/Scripts/sphinx-build.exe",
+            "args": ["-b", "html", "src", "build"],
+            "cwd": "${workspaceFolder}/docs",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+        }
+    ],
+}
