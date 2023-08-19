@@ -1,0 +1,495 @@
+[tool.poetry]
+name = "poetry_plugin_constrain"
+version = "0.1.0"
+description = "A poetry plugin and pre-commit hook that enforces a default version constraint method for dependencies."
+authors = ["Adam Grant Hendry <adam.grant.hendry@gmail.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/adam-grant-hendry/poetry_plugin_constrain"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10"
+]
+packages = [
+    {include = "poetry_plugin_constrain", from = "src"},
+    {include = "ci"},
+    {include = "docs"},
+    {include = "tests"}
+]
+keywords = ["poetry", "plugin", "dependency", "version", "constrain"]
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+coverage = { extras = ["toml"], version = ">=6.4" }  # Measures code coverage
+pytest = ">=7.1.2"  # Unit testing framework
+pytest-doctestplus = ">=0.12.0"  # `pytest` plugin for testing example code in docstrings
+pytest-mock = ">=3.7.0"  # `pytest` plugin providing a `mocker` fixture
+pytest-randomly = ">=3.11.0"  # `pytest` plugin to randomly order test execution and control `random.seed`
+pytest-xdist = ">=2.5.0"  # `pytest` plugin enabling testing across multiple CPUs (i.e. `pytest -n auto`)
+tomlkit = ">=0.12.1"  # A `toml` read-write library
+tox = ">=3.25.0"  # Run tests for multiple Python versions in separated isolated (non-"tox"ic) environments
+
+[tool.poetry.group.type]
+optional = true
+
+[tool.poetry.group.type.dependencies]
+mypy = ">=0.991"  # Static type checker
+mypy-extensions = ">=0.4.3"  # Extensions to `typing` module supported by `mypy` for older Python versions
+pydantic = ">=1.10.2"  # Data validation using type hints (`mypy` plugin)
+pyright = ">=1.1.253"  # Microsoft's static type checker for Python
+types-beautifulsoup4 = ">=4.11.6.1"  # `bs4` type hinting stubs
+typing-extensions = ">=4.2.0"  # Enables type hinting features across various Python versions
+
+[tool.poetry.group.format]
+optional = true
+
+[tool.poetry.group.format.dependencies]
+add-trailing-comma = ">=2.2.3"  # Add trailing commas to calls and literals
+black = ">=22.3.0"  # PEP 8 auto-formatter
+blacken-docs = ">=1.12.1"  # Apply `black` to code in docs
+codespell = ">=2.1.0"  # Spell checker
+commitizen = ">=3.6.0"  # Conventional commits standard enforcer
+isort = ">=5.10.1"  # Sorts imports alphabetically per PEP 8
+pre-commit = ">=2.18.1"  # Multi-language package manager for pre-commit hooks
+pycln = ">=1.3.5"  # Formatter for removing unused imports
+pydocstringformatter = ">=0.7.0"  # PEP 257 and Numpy/Google/Sphinx-style auto-formatter
+rstcheck = { extras = ["toml", "sphinx"], version = ">=5.0.0" }  # reStructuredText syntax linter
+ruff = ">=0.0.282"  # Fast Python linter written in Rust
+vulture = ">=2.3"  # Find and clean dead code (static code analyzer)
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+beautifulsoup4 = ">=4.11.1"  # Pulls data out of HTML files (e.g. validate docs)
+graphviz = ">=0.20"  # Render graphs
+html5lib = ">=1.1"  # HTML5 parser
+instaviz = ">=0.6.0"  # AST and Code Objects visualizer
+jinja2 = ">=3.1.2"  # Templating
+lxml = ">=4.8.0"  # Python binding for libxml2 and libxslt C libraries
+numpydoc = ">=1.4.0"  # Numpy docstring format support in Sphinx
+objgraph = ">=3.5.0"  # Visually explore graphviz graphs
+pydata-sphinx-theme = ">=0.14.1"
+sphinx = ">=6.2.1" # Documentation/static-site generator
+sphinx-book-theme = ">=0.3.3"  # `sphinx` theme mimicing interactive book feel
+sphinx-copybutton = ">=0.5.2"  # Add copy buttons to the upper-right of code blocks
+sphinxcontrib-email = ">=0.3.5"  # `sphinx` extension for obfuscating email `mail-to` links
+sphinxcontrib-mermaid = ">=0.7.1"  # `sphinx` extension for embedding `Mermaid` graphs
+sphinxcontrib-napoleon = ">=0.7"  # `sphinx` extension to parse Numpy/Google-style docstrings and convert to rST before rendering
+
+[tool.poetry.group.github-actions]
+optional = true
+
+[tool.poetry.group.github-actions.dependencies]
+pytest-github-actions-annotate-failures = ">=0.2.0"
+
+[tool.poetry.dependencies]
+python = ">=3.8.10,<3.11"  # Python language
+appdirs = ">=1.4.4"  # Abstracts program installation and user paths across all OSs
+cleo = ">=2.0.1"  # CLI library
+packaging = ">=23.1"
+poetry = ">=1.6.1"  # The poetry library dependency manager
+poetry-core = ">=1.7.0"  # The poetry library core functionality
+pyupgrade = ">=3.10.1"  # Automatically upgrade python syntax for newer python versions
+seedir = ">=0.3.0"  # Creates folder tree diagrams
+
+[tool.ruff]
+# Enable linting and formatting rules
+select = [
+    "A",  # flake8-builtins (Linter to check for python builtins being used as variables or parameters)
+    "ARG",  # flake8-unused-arguments (Linter for unused arguments)
+    "B",  # flake8-bugbear (Linter for additional flake8 rules)
+    "BLE",  # flake8-blined-except (Linter for bare `except Exception/BaseException`)
+    "C4",  # flake8-comprehensions (Linter for writing better comprehensions)
+    "C90",  # mccabe (Linter for code complexity)
+    "D",  # pydocstyle (Static code analyzer for PEP 257 and Numpy/Google/Sphinx-style docstrings)
+    "DTZ",  # flake8-datetimez (Lint for usage of unsafe naive datetime class)
+    "E",  # pycodestyle (PEP 8 style guide checker)
+    "F",  # pyflakes (Static code analyzer for code smells)
+    "FA",  # flake8-future-annotations (Linter for `from __future__ import annotations`)
+    "FBT",  # flake8-boolean-trap (Linter for antipattern of using a positional boolean arg to switch behavior in public API)
+    "FLY",  # flynt (Linter to enforce using f-strings over join
+    "ICN",  # flake8-import-conventions (Linter for commonly accepted `import as` statements, e.g. `import pandas as pd`)
+    "INP",  # flake8-no-pep420  (Linter to prevent namespace packages)
+    "ISC",  # flake8-implicit-str-concat (Linter for improper string concatenation usages)
+    "N",  # pep8-naming (PEP 8 class, function, variable naming linter)
+    "PERF",  # perflint (Linter for performance antipatterns)
+    "PGH",  # flake8-pygrep-hooks (Linter for using `eval` and adding rule codes to type ignores)
+    "PIE",  # flake8-pie (Linter for extra flake8 rules)
+    "PT",  # flake8-pytest-style (Linter for pytest)
+    "PTH",  # flake8-use-pathlib (Linter for using pathlib over os)
+    "PYI",  # flake8-pyi (Linter for stub files)
+    "Q",  # flake8-quotes (Linter for consistent string quoting)
+    "RSE",  # flake8-raise (Linter for common `raise` statement errors)
+    "RUF",  # ruff-specific rules
+    "S",  # bandit (Static code analyzer for security issues)
+    "SIM",  # flake8-simplify (Linter to simplify certain expressions in code)
+    "SLOT",  # flake8-slots (Linter to require `__slots__` for subclasses of immutable types)
+    "T10",  # flake8-debugger (Linter for left in pdb/ipdb statements in code)
+    "T20",  # flake8-print (Linter for left over `(p)print` statements)
+    "TCH",  # flake8-type-checking (Linter to use `if TYPE_CHECKING` if module not needed at runtime)
+    "TRY",  # tryceratops (Linter for exception handling antipatterns)
+    "UP",  # pyupgrade
+    "YTT",  # flake8-2020 (Linter for `sys.version` usage errors with Python>=3.10),
+]
+ignore = [
+    # pycodestyle
+    "E203",  # Whitespace before ':'
+    "E731",  # Do not assign a lambda expression, use a def
+
+    # pydocstyle
+    "D101",  # Missing class docstring; Use docstring in `__init__` instead
+    "D105",  # Missing docstring in magic method
+
+    # pep8-naming
+    "N802",  # Qt uses camelCase
+
+    # bandit
+    "S101",  # `assert` is removed when compiling to optimized bytecode; (ignored for `pytest`)
+    "S301",  # builtin `pickle` module can be unsafe
+]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    "__pycache__",
+    "__pypackages__",
+    "_build",
+    ".bzr",
+    ".cache",
+    ".direnv",
+    ".eggs",
+    ".git-rewrite",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "*.egg-info",
+    "*.pyc",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+src = ["src"]
+
+line-length = 90
+target-version = "py38"
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]  # "Imported but unused: happens with packages
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+inline-quotes = "single"
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
+
+[tool.black]
+line-length = 90
+skip-string-normalization = true
+target-version = ["py38"]
+include = '.*\.pyi?$'
+exclude = '\.eggs|\.git|\.mypy_cache|\.tox|\.venv|build|dist'
+
+[tool.commitizen]
+name = "cz_customize"
+version = "0.1.0"
+version_files = [
+    "pyproject.toml:version",
+]
+major_version_zero = true
+update_changelog_on_bump = true
+gpg_sign = false
+tag_format = "$version"
+bump_message = "🚀 bump: version $current_version → $new_version"
+style = [
+    ["qmark", "fg:#ff9d00 bold"],
+    ["question", "italic"],
+    ["answer", "fg:#ff9d00 bold"],
+    ["pointer", "fg:#ff9d00 bold"],
+    ["highlighted", "fg:#ff9d00 bold"],
+    ["selected", "fg:#cc5454"],
+    ["separator", "fg:#cc5454"],
+    ["instruction", ""],
+    ["text", ""],
+    ["disabled", "fg:#858585 italic"]
+]
+
+[tool.commitizen.customize]
+
+message_template = "{{change_type}}({{scope}}){% if is_breaking_change == true %}!{% endif %}: {{subject}}{% if body %}\n\n{{body}}{% endif %}{% if footer %}\n\n{{footer}}{% endif %}"
+schema_pattern = '(✨? ?feat|🐛? ?fix|♻️? ?refactor|📚? ?docs|🤖? ?ci|🧪? ?test|⬆️? ?perf|🗑️? ?deprecate|🧹? ?chore|❓? ?other)(\(\S+\))?!?:(\s.*)'
+bump_pattern = '^(✨? ?feat|🐛? ?fix|♻️? ?refactor|📚? ?docs|🤖? ?ci|🧪? ?test|⬆️? ?perf|🗑️? ?deprecate|🧹? ?chore|❓? ?other)(\(.+\))?(!)?'
+bump_map = { "^.+!$" = "MAJOR", "✨? ?feat" = "MINOR", "🐛? ?fix" = "PATCH", "♻️? ?refactor" = "PATCH", "📚? ?docs" = "PATCH", "🤖? ?ci" = "PATCH", "🧪? ?test" = "PATCH", "⬆️? ?perf" = "PATCH", "🗑️? ?deprecate" = "PATCH", "🧹? ?chore" = "PATCH", "❓? ?other" = "PATCH" }
+change_type_order = ["!", "✨? ?feat", "🐛? ?fix", "♻️? ?refactor", "📚? ?docs", "🤖? ?ci", "🧪? ?test", "⬆️? ?perf", "🗑️? ?deprecate", "🧹? ?chore", "❓? ?other"]
+commit_parser = '^(?P<change_type>=✨? ?feat|🐛? ?fix|♻️? ?refactor|📚? ?docs|🤖? ?ci|🧪? ?test|⬆️? ?perf|🗑️? ?deprecate|🧹? ?chore|❓? ?other)(?:\((?P<scope>=[^()\r\n]*)\)|\()?(?P<breaking>=!)?:\s(?P<message>=.*)?'
+changelog_pattern = '^(✨? ?feat|🐛? ?fix|♻️? ?refactor|📚? ?docs|🤖? ?ci|🧪? ?test|⬆️? ?perf|🗑️? ?deprecate|🧹? ?chore|❓? ?other)(\(.+\))?(!)?'
+change_type_map = { "✨ feat" = "✨ Feature", "🐛 fix" = "🐛 Bug Fix", "♻️ refactor" = "♻️ Refactor", "📚 docs" = "📚 Docs", "🤖 ci" = "🤖 CI", "🧪 test" = "🧪 Test", "⬆️ perf" = "⬆️ Performance", "🗑️ deprecate" = "🗑️ Deprecate", "🧹 chore" = "🧹 Chore", "❓ other" = "❓ Other"}
+
+
+[[tool.commitizen.customize.questions]]
+name = "change_type"
+type = "list"
+message = "Select the change type"
+choices = [
+    { value = "✨ feat", name = "✨ feat: (Bumps MINOR) Adds/removes an item/feature" },
+    { value = "🐛 fix", name = "🐛 fix: (Bumps PATCH) Changes existing item(s)/feature(s)" },
+    { value = "♻️ refactor", name = "♻️ refactor: (Bumps PATCH) Reorganizes item(s); not a 'feat' or 'fix'" },
+    { value = "📚 docs", name = "📚 docs: (Bumps PATCH) Changes documentation" },
+    { value = "🤖 ci", name = "🤖 ci: (Bumps PATCH) Changes CI files" },
+    { value = "🧪 test", name = "🧪 test: (Bumps PATCH) Adds/modifies tests" },
+    { value = "⬆️ perf", name = "⬆️ perf: (Bumps PATCH) Improves performance" },
+    { value = "🗑️ deprecate", name = "🗑️ deprecate: (Bumps PATCH) Deprecates a feature" },
+    { value = "🧹 chore", name = "🧹 chore: (Bumps PATCH) Changes style (spelling, formatting, etc.)" },
+    { value = "❓ other", name = "❓ other: (Bumps PATCH) Changes something not in an existing category" },
+]
+
+[[tool.commitizen.customize.questions]]
+name = "scope"
+type = "input"
+message = "Scope. Entry the module, folder, file, or entity modified (as perceived by the author):\n"
+
+[[tool.commitizen.customize.questions]]
+name = "subject"
+type = "input"
+message = "Subject. Enter a short summary of the change (imperative tone, lowercase, no period):\n"
+
+[[tool.commitizen.customize.questions]]
+name = "is_breaking_change"
+type = "confirm"
+message = "Is this a BREAKING CHANGE (backwards incompatible)? (Bumps MAJOR; default: N):\n"
+default = false
+
+[[tool.commitizen.customize.questions]]
+name = "body"
+type = "input"
+message = "Body. Enter details about the change (use full sentences with proper grammar): (Press [Enter] to skip):\n"
+
+[[tool.commitizen.customize.questions]]
+name = "footer"
+type = "input"
+message = "Footer. Reference Issues/PRs/etc. this change addresses. (Press [Enter] to skip):\n"
+
+[tool.coverage.run]
+# Measure branch coverage in addition to statement coverage
+branch = true
+# The program to run when `coverage run` is run without arguments. Use `-m` to specify a
+# python module (i.e. `-m pytest` becomes `coverage run python -m pytest`). `coverage`
+# measures coverage on the files the program touches (further limited by `source` and
+# `omit` below).
+command_line = '-m pytest'
+# Append machine name, process id, and random number to data file name so coverage can be
+# run in parallel environments, e.g. `tox` and GitHub Actions virtual machines.
+parallel = true
+# The files to measure during program execution
+source = [
+    'src/poetry_plugin_constrain/'
+]
+# Files not to measure during program execution
+omit = [
+    '.vscode/',
+    '.venv/',
+    'tests/',
+    'stubs/'
+]
+disable_warnings = ['no-data-collected']
+
+[tool.coverage.html]
+directory = 'logs/coverage/html'
+
+[tool.coverage.json]
+output = 'logs/coverage/coverage.json'
+
+[tool.coverage.report]
+exclude_lines = [
+    'pragma: no cover',
+    'def __repr__',
+    'raise AssertionError',
+    'raise NotImplementedError',
+    'if __name__ == .__main__.:',
+    '@(abc\.)?abstractmethod',
+    'if TYPE_CHECKING:',
+    'from __future__ import annotations'
+]
+
+[tool.coverage.paths]
+source = [
+    "src/",
+    "*/site-packages"
+]
+others = [
+    "src/",
+    "*/src",
+]
+
+[tool.isort]
+profile = "black"
+add_imports = [
+    "from __future__ import annotations"  # Automatically add to module on save if not there
+]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 90
+skip_glob = [
+    # Other installed packages may require a specific sort order
+    # e.g. See: https://github.com/pyvista/pyvista/issues/3141
+    ".venv/Lib/site-packages/*",
+]
+
+[tool.mypy]
+python_version = "3.8"
+disallow_untyped_defs = false
+warn_return_any = true
+warn_unused_configs = true
+# ``warn_unused_ignores`` seems to be giving several false positives.
+# See:
+#   - https://github.com/python/mypy/issues/4412
+#   - https://github.com/python/mypy/issues/5940
+#   - https://github.com/python/mypy/issues/8823
+#   - https://github.com/python/mypy/issues/2960
+warn_unused_ignores = false
+warn_redundant_casts = true
+show_error_codes = true
+no_pretty = true
+show_column_numbers = true
+plugins = [
+    "pydantic.mypy"
+]
+exclude = [
+    'stubs/',
+    '[.]venv/',
+    'build/',
+    'dist/',
+]
+fast_module_lookup = true
+
+[[tool.mypy.overrides]]
+module = [
+    "stubs.*",
+]
+ignore_errors = true
+follow_imports = "skip"
+follow_imports_for_stubs = false
+ignore_missing_imports = true
+
+[tool.pycln]
+all = true
+include = '.*\.pyi?$'
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+# `coverage` does not work with `pytest-xdist`, but supports the `parallel` option for
+# appending the machine name, process id, and a random number to the `.coverage` data file
+# so the same file is not overwritten when run in parallel environments, e.g. `tox` and
+# GitHub Actions virtual machines.
+# See:
+#   - https://github.com/nedbat/coveragepy/issues/1341
+#   - https://coverage.readthedocs.io/en/6.5.0/subprocess.html
+# `pytest-cov` does not support the `parallel` option, but does work seemingly well with
+# `pytest-xdist` for running tests in parallel
+# See:
+#   - https://github.com/pytest-dev/pytest-cov/issues/416
+#   - https://pytest-cov.readthedocs.io/en/latest/config.html#configuration
+# Another alternative is using `tox` with `pytest-cov` and specifying
+#   setenv =
+#     COVERAGE_FILE=.coverage.{envname}
+# See:
+#   - https://github.com/pytest-dev/pytest-cov/issues/416
+# However this creates and activates a separate virtual environment, which slows the run,
+# and still doesn't seem to work well with `tox -p auto` and/or `pytest -n auto`.
+#
+# Since GitHub Actions runners only have 2 cores by default, no significant gain is had
+# by running tests in parallel on CI/CD. Hence, `-n auto` is not added to options here.
+# `pytest` can still be run with `xdist` on its own locally for a speed boost, just not
+# with `coverage`.
+addopts = """\
+--last-failed --last-failed-no-failures all \
+-p no:faulthandler \
+--import-mode=importlib \
+"""
+testpaths = [
+    "tests",
+]
+doctest_plus = "enabled"
+pythonpath = ["src"]
+
+[tool.rstcheck]
+# `rstcheck` is known to be buggy on Windows
+# See Issue #107: https://github.com/rstcheck/rstcheck/issues/107
+ignore_messages = [
+    "(Duplicate label .*, other instance in .*)"
+]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+minversion = 3.25.0
+envlist = py{38,39,310},coverage
+
+[testenv]
+allowlist_externals =
+    poetry
+    pytest
+setenv =
+    # See: https://github.com/tox-dev/tox/issues/1550
+    PYTHONIOENCODING=utf-8
+commands =
+    poetry install --no-root --sync --with test
+    coverage run
+
+[testenv:coverage]
+depends = py{38,39,310}
+deps =
+    coverage
+basepython = python3.10
+commands =
+    coverage combine
+    coverage report --show-missing
+    coverage html --skip-covered --skip-empty
+    coverage json
+parallel_show_output = true
+
+# Not run by default (not in `envlist`). To run, use `tox -e docs`
+[testenv:docs]
+allowlist_externals =
+    sphinx-build
+basepython =
+    python3.10
+commands =
+    poetry install --sync --with docs
+    sphinx-build -W --keep-going -b html docs/source docs/_build
+"""
+
+[tool.poetry.plugins."poetry.application.plugin"]
+constrain = "poetry_plugin_constrain.plugins:ConstrainPlugin"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

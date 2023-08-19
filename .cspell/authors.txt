@@ -1,0 +1,4 @@
+# Names of authors who contribute to this project
+Adam Hendry
+schneegans
+snok

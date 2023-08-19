@@ -1,0 +1,158 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    if: "!startsWith(github.event.head_commit.message, '🚀 bump:')"
+
+    name: Create Release
+    runs-on: ubuntu-22.04
+
+    defaults:
+      run:
+        shell: bash
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out the Repository
+        uses: actions/checkout@v4
+        with:
+          # See: https://github.com/actions/checkout/issues/206
+          # See: https://github.com/actions/checkout/issues/1471
+          fetch-depth: 0
+          fetch-tags: true
+
+      # NOTE: Don't cache with `setup-python`. Jobs on the same runner, repo, and branch
+      # can share caches. See:
+      #   - https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+      # `setup-python` generates the same key based on the `poetry.lock` file, but we
+      # install different dependencies in each workflow using `--with`. See also:
+      #   - https://github.com/actions/setup-python/issues/505
+      # For python dependencies, have `poetry` create the `venv` in the project, use
+      # `actions/cache`, and add the workflow and job names to the cache key instead.
+      - name: Cache `venv`
+        uses: actions/cache@v3
+        id: venv-cache
+        with:
+          path: .venv
+          key: ${{ github.workflow }}-${{ github.job }}-venv-${{ matrix.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install `poetry==1.6.1`
+        run: |
+          pipx install poetry==1.6.1
+
+      - name: Configure `poetry`
+        run: poetry config virtualenvs.in-project true
+
+      - name: Setup `python==3.10`
+        uses: actions/setup-python@v4
+        id: setup-python
+        with:
+          python-version: "3.10"
+          cache: 'poetry'
+
+      - name: Configure `pip`
+        run: |
+          python -m pip config set global.disable-pip-version-check true
+
+      - name: Install Dependencies
+        if: steps.venv-cache.outputs.cache-hit != 'true'
+        run: |
+          poetry install
+
+      - name: Install `commitizen==3.9.0`
+        run: |
+          pipx install commitizen==3.9.0
+
+      - name: Bump Version and Create Changelog
+        id: cz
+        run: |
+          echo "Configure Git..."
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local pull.rebase true
+          git config --local commit.gpgsign false
+          git config --local tag.gpgsign false
+
+          echo "Bump version..."
+          cz --no-raise 21 bump \
+          --yes \
+          --changelog \
+          --check-consistency \
+          --changelog-to-stdout > changes.md
+
+          new_version="$(cz version --project)"
+          current_branch="$(git branch --show-current)"
+          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          echo "Push to branch..."
+          git pull "$remote_repo" "$current_branch"
+          git push "$remote_repo" "HEAD:${current_branch}" --tags
+
+          # Output version number for next steps
+          echo "version=${new_version}" >> $GITHUB_OUTPUT
+
+      - name: Build Project
+        run: poetry build
+
+      - name: Create Release
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: "changes.md"
+          files: |
+            LICENSE
+            dist/*
+          tag_name: ${{ steps.cz.outputs.version }}
+
+      - name: Upload `dist/` Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
+
+  docs:
+    name: Docs
+    needs: create-release
+    uses: ./.github/workflows/docs.yml
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+  publish:
+    if: "!startsWith(github.event.head_commit.message, '🚀 bump:')"
+    needs: create-release
+
+    name: Publish Package
+    runs-on: ubuntu-22.04
+
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/poetry-plugin-constrain/
+
+    defaults:
+      run:
+        shell: bash
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Check out the Repository
+        uses: actions/checkout@v4
+
+      - name: Download `dist/` Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
