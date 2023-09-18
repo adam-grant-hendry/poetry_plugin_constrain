@@ -1,3 +1,0 @@
-# Names of ``pytest`` fixtures
-capsys
-pytester
