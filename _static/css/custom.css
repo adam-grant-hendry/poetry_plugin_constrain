@@ -1,5 +1,0 @@
-/* See: https://github.com/pydata/pydata-sphinx-theme/issues/1238 */
-.sidebar-primary-items__end {
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
-}
