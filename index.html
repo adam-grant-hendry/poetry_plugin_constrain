@@ -319,7 +319,6 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#help">Help</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
@@ -327,6 +326,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit">Pre-Commit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a><ul class="nav section-nav flex-column">
 </ul>
 </li>
@@ -346,7 +346,7 @@ document.write(`
 <p>A <a class="reference external" href="https://python-poetry.org/">poetry</a> plugin and <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook that lets the user choose the default method for constraining dependency versions. By default, uses <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> instead of <code class="docutils literal notranslate"><span class="pre">^</span></code>.</p>
 <section id="background">
 <h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
-<p>By default, <a class="reference external" href="https://python-poetry.org/">poetry</a> uses <a class="reference external" href="https://python-poetry.org/docs/dependency-specification/#caret-requirements">upper bound constraints</a> (i.e. <code class="docutils literal notranslate"><span class="pre">^</span></code>) when adding new dependencies, which has has been hotly contested <a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id7" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. This package permits users to choose the type of constraint to enforce by default and adds hooks to automatically format constraints after <code class="docutils literal notranslate"><span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">add</span></code>, <code class="docutils literal notranslate"><span class="pre">check</span></code>, or <code class="docutils literal notranslate"><span class="pre">update</span></code> are called. The package can also be used as a <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook.</p>
+<p>By default, <a class="reference external" href="https://python-poetry.org/">poetry</a> uses <a class="reference external" href="https://python-poetry.org/docs/dependency-specification/#caret-requirements">upper bound constraints</a> (i.e. <code class="docutils literal notranslate"><span class="pre">^</span></code>) when adding new dependencies, which has has been hotly contested <a class="footnote-reference brackets" href="#id7" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id8" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id9" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. This package permits users to choose the type of constraint to enforce by default and adds hooks to automatically format constraints after <code class="docutils literal notranslate"><span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">add</span></code>, <code class="docutils literal notranslate"><span class="pre">check</span></code>, or <code class="docutils literal notranslate"><span class="pre">update</span></code> are called. The package can also be used as a <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook.</p>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
@@ -450,13 +450,6 @@ document.write(`
 </ul>
 </div></blockquote>
 </section>
-<section id="help">
-<h3>Help<a class="headerlink" href="#help" title="Permalink to this heading">#</a></h3>
-<p>To see help for the command, run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="n">constrain</span> <span class="o">--</span><span class="n">help</span>
-</pre></div>
-</div>
-</section>
 </section>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">#</a></h2>
@@ -464,11 +457,11 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> variables and environment variables accept any of the following as equiavlent to <code class="docutils literal notranslate"><span class="pre">true</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``&#39;y&#39;``, ``&#39;yes&#39;``, ``&#39;t&#39;``, ``&#39;true&#39;``, ``&#39;on&#39;``, or ``1``
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="ow">or</span> <span class="s1">&#39;1&#39;</span>
 </pre></div>
 </div>
 <p>and any of the following as equivalent to <code class="docutils literal notranslate"><span class="pre">false</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``&#39;n&#39;``, ``&#39;no&#39;``, ``&#39;f&#39;``, ``&#39;false&#39;``, ``&#39;off&#39;``, or ``0``
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="ow">or</span> <span class="s1">&#39;0&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -512,29 +505,45 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="pre-commit">
+<h2>Pre-Commit<a class="headerlink" href="#pre-commit" title="Permalink to this heading">#</a></h2>
+<p>To install <code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> as a <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook, add the following entry to your <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> file:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">repos</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/adam-grant-hendry/poetry_plugin_constrain</span>
+<span class="w">  </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1.0</span>
+<span class="w">  </span><span class="nt">hooks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poetry-plugin-constrain</span>
+</pre></div>
+</div>
+</section>
 <section id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading">#</a></h2>
 <p>This package is heavily inspired by <a class="reference external" href="https://github.com/zanieb/poetry-relax">poetry-relax</a> with a few differences:</p>
 <ol class="arabic simple">
 <li><p>Users can specify which constraint method to use when adding new dependencies (defaults to <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>).</p></li>
-<li><p>Users can specify which constraint method to replace (defaults to <code class="docutils literal notranslate"><span class="pre">^</span></code>)</p></li>
+<li><p>Users can also specify which constraint method to replace (defaults to <code class="docutils literal notranslate"><span class="pre">^</span></code>)</p></li>
+<li><p>It <em>does</em> change the constraints on <code class="docutils literal notranslate"><span class="pre">python</span></code>. This has also been debated <a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, but the primary rationale is that <em>packages should always test all versions they claim to support</em>. Hence, when your <code class="docutils literal notranslate"><span class="pre">python</span></code> constraint is updated from <code class="docutils literal notranslate"><span class="pre">^</span></code> to <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <em>be sure to manually add the highest version of python tested as your upper-bound</em>.</p></li>
 <li><p>Options for the plugin can be configured in the user <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file or with <code class="docutils literal notranslate"><span class="pre">environment</span> <span class="pre">variables</span></code>.</p></li>
 <li><p>Hooks have been added to run <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">constrain</span></code> automatically after <code class="docutils literal notranslate"><span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">add</span></code>, <code class="docutils literal notranslate"><span class="pre">check</span></code>, or <code class="docutils literal notranslate"><span class="pre">update</span></code> are called (see <code class="docutils literal notranslate"><span class="pre">opting</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">command</span> <span class="pre">hooks</span></code>.)</p></li>
 <li><p>You can add <code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> to your <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> as a <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook.</p></li>
 </ol>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id5" role="note">
+<aside class="footnote brackets" id="id7" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p><a class="github reference external" href="https://github.com/python-poetry/poetry/issues/3747">python-poetry/poetry#3747</a></p>
 </aside>
-<aside class="footnote brackets" id="id6" role="note">
+<aside class="footnote brackets" id="id8" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p><a class="github reference external" href="https://github.com/python-poetry/poetry/issues/3427">python-poetry/poetry#3427</a></p>
 </aside>
-<aside class="footnote brackets" id="id7" role="note">
+<aside class="footnote brackets" id="id9" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
 <p><a class="github reference external" href="https://github.com/python-poetry/poetry/issues/2731">python-poetry/poetry#2731</a></p>
+</aside>
+<aside class="footnote brackets" id="id10" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p><a class="github reference external" href="https://github.com/python-poetry/poetry/discussions/3757#discussioncomment-435345">python-poetry/poetry#3757</a></p>
 </aside>
 </aside>
 <div class="toctree-wrapper compound">
@@ -601,7 +610,6 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#help">Help</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
@@ -609,6 +617,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit">Pre-Commit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a><ul class="nav section-nav flex-column">
 </ul>
 </li>

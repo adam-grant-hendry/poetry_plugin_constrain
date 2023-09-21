@@ -119,13 +119,6 @@ Options
 
   * ``--check``: Check the ``poetry.lock`` file for consistency after changing constraints (equivalent to running ``poetry check``).
 
-Help
-----
-
-To see help for the command, run::
-
-   poetry constrain --help
-
 Configuration
 =============
 
@@ -135,11 +128,11 @@ Configuration
 
    ``pyproject.toml`` variables and environment variables accept any of the following as equiavlent to ``true``::
 
-      ``'y'``, ``'yes'``, ``'t'``, ``'true'``, ``'on'``, or ``1``
+      'y', 'yes', 't', 'true', 'on', or '1'
 
    and any of the following as equivalent to ``false``::
 
-      ``'n'``, ``'no'``, ``'f'``, ``'false'``, ``'off'``, or ``0``
+      'n', 'no', 'f', 'false', 'off', or '0'
 
 ``pyproject.toml``
 ------------------
@@ -182,6 +175,19 @@ All ``poetry-plugin-constrain`` environment variables begin with ``POETRY_PLUGIN
    POETRY_PLUGIN_CONSTRAIN_LOCK=0
    POETRY_PLUGIN_CONSTRAIN_CHECK=0
 
+Pre-Commit
+==========
+
+To install ``poetry-plugin-constrain`` as a `pre-commit`_ hook, add the following entry to your ``.pre-commit-config.yaml`` file:
+
+.. code:: yaml
+
+   repos:
+   - repo: https://github.com/adam-grant-hendry/poetry_plugin_constrain
+     rev: 0.1.0
+     hooks:
+       - id: poetry-plugin-constrain
+
 Acknowledgements
 ================
 
@@ -189,7 +195,9 @@ This package is heavily inspired by `poetry-relax`_ with a few differences:
 
 #. Users can specify which constraint method to use when adding new dependencies (defaults to ``>=``).
 
-#. Users can specify which constraint method to replace (defaults to ``^``)
+#. Users can also specify which constraint method to replace (defaults to ``^``)
+
+#. It *does* change the constraints on ``python``. This has also been debated [#]_, but the primary rationale is that *packages should always test all versions they claim to support*. Hence, when your ``python`` constraint is updated from ``^`` to ``>=``, *be sure to manually add the highest version of python tested as your upper-bound*.
 
 #. Options for the plugin can be configured in the user ``pyproject.toml`` file or with ``environment variables``.
 
@@ -207,6 +215,7 @@ This package is heavily inspired by `poetry-relax`_ with a few differences:
 .. [#] https://github.com/python-poetry/poetry/issues/3747
 .. [#] https://github.com/python-poetry/poetry/issues/3427
 .. [#] https://github.com/python-poetry/poetry/issues/2731
+.. [#] https://github.com/python-poetry/poetry/discussions/3757#discussioncomment-435345
 
 .. toctree::
    :maxdepth: 2
