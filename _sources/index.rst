@@ -197,7 +197,7 @@ This package is heavily inspired by `poetry-relax`_ with a few differences:
 
 #. Users can also specify which constraint method to replace (defaults to ``^``)
 
-#. It *does* change the constraints on ``python``. This has also been debated [#]_, but the primary rationale is that *packages should always test all versions they claim to support*. Hence, when your ``python`` constraint is updated from ``^`` to ``>=``, *be sure to manually add the highest version of python tested as your upper-bound*.
+#. It *does* change the constraints on ``python``. This has also been debated [#]_, but the primary rationale is that ***packages should always test all versions they claim to support***. Hence, if your ``python`` constraint is updated from ``^`` to ``>=``, ***be sure to manually add the highest version of python tested for your package as your upper-bound***.
 
 #. Options for the plugin can be configured in the user ``pyproject.toml`` file or with ``environment variables``.
 
