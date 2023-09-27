@@ -1,0 +1,722 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<meta content="A poetry plugin and pre-commit hook that lets the user choose the default method for constraining dependency versions.  :keywords: poetry, plugin, dependency, version, constrain" name="description" />
+
+    <title>poetry-plugin-constrain</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://adam-grant-hendry.github.io/poetry_plugin_constrain/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="poetrypluginconstrain.org/index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing 🎉" href="_pages/contributing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="versionswitcherbutton" type="button" role="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="listbox" aria-controls="versionswitcherlist" aria-label="Version switcher list">
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="versionswitcherlist" class="version-switcher__menu dropdown-menu list-group-flush py-0" role="listbox" aria-labelledby="versionswitcherbutton">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+  </div>
+  
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_light.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo_dark.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_pages/contributing.html">Contributing 🎉</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_pages/contact.html">Contact Us 📞</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/adam-grant-hendry/poetry_version_constrain" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>poetry-plugin-constrain</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pip"><code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipx"><code class="docutils literal notranslate"><span class="pre">pipx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poetry"><code class="docutils literal notranslate"><span class="pre">poetry</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyproject-toml"><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit">Pre-Commit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="poetry-plugin-constrain">
+<h1>poetry-plugin-constrain<a class="headerlink" href="#poetry-plugin-constrain" title="Permalink to this heading">#</a></h1>
+<p>A <a class="reference external" href="https://python-poetry.org/">poetry</a> plugin and <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook that lets the user choose the default method for constraining dependency versions. By default, uses <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> instead of <code class="docutils literal notranslate"><span class="pre">^</span></code>.</p>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
+<p>By default, <a class="reference external" href="https://python-poetry.org/">poetry</a> uses <a class="reference external" href="https://python-poetry.org/docs/dependency-specification/#caret-requirements">upper bound constraints</a> (i.e. <code class="docutils literal notranslate"><span class="pre">^</span></code>) when adding new dependencies, which has has been hotly contested <a class="footnote-reference brackets" href="#id7" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id8" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id9" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. This package permits users to choose the type of constraint to enforce by default and adds hooks to automatically format constraints after <code class="docutils literal notranslate"><span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">add</span></code>, <code class="docutils literal notranslate"><span class="pre">check</span></code>, or <code class="docutils literal notranslate"><span class="pre">update</span></code> are called. The package can also be used as a <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> can be installed with <code class="docutils literal notranslate"><span class="pre">pip</span></code>, <code class="docutils literal notranslate"><span class="pre">pipx</span></code>, or <code class="docutils literal notranslate"><span class="pre">poetry</span></code>.</p>
+<section id="pip">
+<h3><code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#pip" title="Permalink to this heading">#</a></h3>
+<p>To install, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">poetry</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">constrain</span>
+</pre></div>
+</div>
+<p>To verify the plugin is available, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="bp">self</span> <span class="n">show</span> <span class="n">plugins</span>
+</pre></div>
+</div>
+<p>To uninstall, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">uninstall</span> <span class="n">poetry</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">constrain</span>
+</pre></div>
+</div>
+</section>
+<section id="pipx">
+<h3><code class="docutils literal notranslate"><span class="pre">pipx</span></code><a class="headerlink" href="#pipx" title="Permalink to this heading">#</a></h3>
+<p>To install, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipx</span> <span class="n">inject</span> <span class="n">poetry</span> <span class="n">poetry</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">constrain</span>
+</pre></div>
+</div>
+<p>To verify the plugin is available, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="bp">self</span> <span class="n">show</span> <span class="n">plugins</span>
+</pre></div>
+</div>
+<p>To uninstall, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipx</span> <span class="n">runpip</span> <span class="n">poetry</span> <span class="n">uninstall</span> <span class="n">poetry</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">constrain</span>
+</pre></div>
+</div>
+</section>
+<section id="poetry">
+<h3><code class="docutils literal notranslate"><span class="pre">poetry</span></code><a class="headerlink" href="#poetry" title="Permalink to this heading">#</a></h3>
+<p>To install, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="bp">self</span> <span class="n">add</span> <span class="n">poetry</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">constrain</span>
+</pre></div>
+</div>
+<p>To verify the plugin is available, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="bp">self</span> <span class="n">show</span> <span class="n">plugins</span>
+</pre></div>
+</div>
+<p>To uninstall, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="bp">self</span> <span class="n">remove</span> <span class="n">poetry</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">constrain</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> is set to run automatically after <code class="docutils literal notranslate"><span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">add</span></code>, <code class="docutils literal notranslate"><span class="pre">check</span></code>, or <code class="docutils literal notranslate"><span class="pre">update</span></code> are called and change <code class="docutils literal notranslate"><span class="pre">^</span></code> constraints to <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>. However, it can also be called directly from the commandline:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="n">constrain</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<section id="options">
+<h3>Options<a class="headerlink" href="#options" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--old</span></code>: The constraint to replace [<strong>Default</strong>: <code class="docutils literal notranslate"><span class="pre">caret</span></code> (i.e. <code class="docutils literal notranslate"><span class="pre">^</span></code>)]. Must be one of:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">caret</span></code> (<code class="docutils literal notranslate"><span class="pre">^</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tilde</span></code> (<code class="docutils literal notranslate"><span class="pre">~</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ne</span></code> (<code class="docutils literal notranslate"><span class="pre">!=</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ge</span></code> (<code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gt</span></code> (<code class="docutils literal notranslate"><span class="pre">&gt;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">le</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lt</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exact</span></code> (<code class="docutils literal notranslate"><span class="pre">==</span></code>)</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<p>To replace <code class="docutils literal notranslate"><span class="pre">~</span></code> constraints with <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="n">constrain</span> <span class="o">--</span><span class="n">old</span> <span class="n">tilde</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--new</span></code>: The constraint to replace <code class="docutils literal notranslate"><span class="pre">old</span></code> with [<strong>Default</strong>: <code class="docutils literal notranslate"><span class="pre">ge</span></code> (i.e. <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>)]. Must be one of:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">caret</span></code> (<code class="docutils literal notranslate"><span class="pre">^</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tilde</span></code> (<code class="docutils literal notranslate"><span class="pre">~</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ne</span></code> (<code class="docutils literal notranslate"><span class="pre">!=</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ge</span></code> (<code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gt</span></code> (<code class="docutils literal notranslate"><span class="pre">&gt;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">le</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lt</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exact</span></code> (<code class="docutils literal notranslate"><span class="pre">==</span></code>)</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<p>To replace <code class="docutils literal notranslate"><span class="pre">^</span></code> constraints with <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> for all dependencies, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poetry</span> <span class="n">constrain</span> <span class="o">--</span><span class="n">new</span> <span class="n">gt</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--only</span></code>: Only constrain these dependency groups. <strong>Takes precedence over</strong> <code class="docutils literal notranslate"><span class="pre">--without</span></code>. [<strong>Multiple values allowed, comma-separated</strong>]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--without</span></code>: Don’t constrain these dependency groups. [<strong>Multiple values allowed, comma-separated</strong>]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dry-run</span></code>: Don’t format the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Just check constraints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--update</span></code>: Update dependencies after changing constraints (equivalent to running <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">update</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--lock</span></code>: Lock the <code class="docutils literal notranslate"><span class="pre">poetry.lock</span></code> file after changing constraints (equivalent to running <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">lock</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--check</span></code>: Check the <code class="docutils literal notranslate"><span class="pre">poetry.lock</span></code> file for consistency after changing constraints (equivalent to running <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">check</span></code>).</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> behavior can be configured in a <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file or with environment variables.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> variables and environment variables accept any of the following as equiavlent to <code class="docutils literal notranslate"><span class="pre">true</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="ow">or</span> <span class="s1">&#39;1&#39;</span>
+</pre></div>
+</div>
+<p>and any of the following as equivalent to <code class="docutils literal notranslate"><span class="pre">false</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="ow">or</span> <span class="s1">&#39;0&#39;</span>
+</pre></div>
+</div>
+</div>
+<section id="pyproject-toml">
+<h3><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code><a class="headerlink" href="#pyproject-toml" title="Permalink to this heading">#</a></h3>
+<p>To configure <code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> using a <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file, add a <code class="docutils literal notranslate"><span class="pre">[tool.poetry-plugin-constrain]</span></code> table and use any of the following settings (below are the default values):</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.poetry-plugin-constrain]</span>
+<span class="n">post-init-hook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;on&quot;</span>
+<span class="n">post-add-hook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;on&quot;</span>
+<span class="n">post-check-hook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;on&quot;</span>
+<span class="n">post-update-hook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;on&quot;</span>
+<span class="n">enable-post-hooks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;on&quot;</span>
+<span class="n">old</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;caret&quot;</span>
+<span class="n">new</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ge&quot;</span>
+<span class="n">only</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;comma_separated_group_names_list&gt;&quot;</span>
+<span class="n">without</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;comma_separated_group_names_list&gt;&quot;</span>
+<span class="n">dry-run</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;false&quot;</span>
+<span class="n">update</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;false&quot;</span>
+<span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;false&quot;</span>
+<span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;false&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading">#</a></h3>
+<p>All <code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> environment variables begin with <code class="docutils literal notranslate"><span class="pre">POETRY_PLUGIN_CONSTRAIN</span></code> and are joined with underscores:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POETRY_PLUGIN_CONSTRAIN_POST_INIT_HOOK</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_POST_ADD_HOOK</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_POST_CHECK_HOOK</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_POST_UPDATE_HOOK</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_ENABLE_POST_HOOKS</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_OLD</span><span class="o">=</span><span class="n">caret</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_NEW</span><span class="o">=</span><span class="n">ge</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_ONLY</span><span class="o">=&lt;</span><span class="n">comma_separated_group_names_list</span><span class="o">&gt;</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_WITHOUT</span><span class="o">=&lt;</span><span class="n">comma_separated_group_names_list</span><span class="o">&gt;</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_DRY_RUN</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_UPDATE</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_LOCK</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">POETRY_PLUGIN_CONSTRAIN_CHECK</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pre-commit">
+<h2>Pre-Commit<a class="headerlink" href="#pre-commit" title="Permalink to this heading">#</a></h2>
+<p>To install <code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> as a <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook, add the following entry to your <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> file:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">repos</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/adam-grant-hendry/poetry_plugin_constrain</span>
+<span class="w">  </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1.0</span>
+<span class="w">  </span><span class="nt">hooks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poetry-plugin-constrain</span>
+</pre></div>
+</div>
+</section>
+<section id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading">#</a></h2>
+<p>This package is heavily inspired by <a class="reference external" href="https://github.com/zanieb/poetry-relax">poetry-relax</a> with a few differences:</p>
+<ol class="arabic simple">
+<li><p>Users can specify which constraint method to use when adding new dependencies (defaults to <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>).</p></li>
+<li><p>Users can also specify which constraint method to replace (defaults to <code class="docutils literal notranslate"><span class="pre">^</span></code>)</p></li>
+<li><p>It <em>does</em> change the constraints on <code class="docutils literal notranslate"><span class="pre">python</span></code>. This has also been debated <a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, but the primary rationale is that <strong>*packages should always test all versions they claim to support*</strong>. Hence, if your <code class="docutils literal notranslate"><span class="pre">python</span></code> constraint is updated from <code class="docutils literal notranslate"><span class="pre">^</span></code> to <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <strong>*be sure to manually add the highest version of python tested for your package as your upper-bound*</strong>.</p></li>
+<li><p>Options for the plugin can be configured in the user <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file or with <code class="docutils literal notranslate"><span class="pre">environment</span> <span class="pre">variables</span></code>.</p></li>
+<li><p>Hooks have been added to run <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">constrain</span></code> automatically after <code class="docutils literal notranslate"><span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">add</span></code>, <code class="docutils literal notranslate"><span class="pre">check</span></code>, or <code class="docutils literal notranslate"><span class="pre">update</span></code> are called (see <code class="docutils literal notranslate"><span class="pre">opting</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">command</span> <span class="pre">hooks</span></code>.)</p></li>
+<li><p>You can add <code class="docutils literal notranslate"><span class="pre">poetry-plugin-constrain</span></code> to your <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> as a <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hook.</p></li>
+</ol>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id7" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="github reference external" href="https://github.com/python-poetry/poetry/issues/3747">python-poetry/poetry#3747</a></p>
+</aside>
+<aside class="footnote brackets" id="id8" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p><a class="github reference external" href="https://github.com/python-poetry/poetry/issues/3427">python-poetry/poetry#3427</a></p>
+</aside>
+<aside class="footnote brackets" id="id9" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p><a class="github reference external" href="https://github.com/python-poetry/poetry/issues/2731">python-poetry/poetry#2731</a></p>
+</aside>
+<aside class="footnote brackets" id="id10" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p><a class="github reference external" href="https://github.com/python-poetry/poetry/discussions/3757#discussioncomment-435345">python-poetry/poetry#3757</a></p>
+</aside>
+</aside>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_pages/contributing.html">Contributing 🎉</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_pages/contributing.html#guidelines">Guidelines</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_pages/contact.html">Contact Us 📞</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="right-next"
+       href="_pages/contributing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contributing 🎉</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pip"><code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipx"><code class="docutils literal notranslate"><span class="pre">pipx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poetry"><code class="docutils literal notranslate"><span class="pre">poetry</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyproject-toml"><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit">Pre-Commit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Adam Grant Hendry
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023-2023, Adam Grant Hendry.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
