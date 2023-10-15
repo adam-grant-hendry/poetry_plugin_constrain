@@ -1,0 +1,13 @@
+[
+    {
+        "version": "dev",
+        "name": "main",
+        "url": "https://adam-grant-hendry.github.io/poetry_plugin_constrain/dev"
+    },
+    {
+        "version": "stable",
+        "name": "0.1.0",
+        "url": "https://adam-grant-hendry.github.io/poetry_plugin_constrain/stable",
+        "preferred": true
+    }
+]
