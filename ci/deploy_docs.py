@@ -37,7 +37,7 @@ SWITCHER_JSON = Path(f'{STABLE_DIR}/_static/switcher.json')
 
 OWNER_USERNAME = 'adam-grant-hendry'
 REPO_NAME = 'poetry_plugin_constrain'
-DOCS_URL = f'https://poetrypluginconstrain.org'
+DOCS_URL = 'https://poetrypluginconstrain.org'
 
 
 def update_landing_page_url() -> bool:

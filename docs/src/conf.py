@@ -18,7 +18,7 @@ OWNER_USERNAME = 'adam-grant-hendry'
 REPO_NAME = 'poetry_plugin_constrain'
 
 REPO_URL = f'https://github.com/{OWNER_USERNAME}/{REPO_NAME}/'
-DOCS_URL = f'https://poetrypluginconstrain.org/'
+DOCS_URL = 'https://poetrypluginconstrain.org/'
 
 USE_VERSION_SWITCHER = True
 HAS_A_RELEASE = subprocess.run(
@@ -82,7 +82,7 @@ exclude_patterns: list[str] = [
 version_match = 'stable'
 json_url = urljoin(DOCS_URL, f'{version_match}/_static/switcher.json')
 
-html_baseurl = f'poetrypluginconstrain.org'
+html_baseurl = 'poetrypluginconstrain.org'
 html_theme = 'sphinx_book_theme'
 html_css_files = [
     'css/custom.css',
